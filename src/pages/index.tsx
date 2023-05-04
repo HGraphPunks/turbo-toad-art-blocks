@@ -37,13 +37,6 @@ export default function Index() {
     ]
   };
   
-
-  const [expanded, setExpanded] = React.useState<string | false>('panel1')
-
-  const handleChange =
-  (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-    setExpanded(newExpanded ? panel : false)
-  }
   return (
     <>
       <div className={styles.nftView}>
@@ -52,6 +45,7 @@ export default function Index() {
             <div className={styles.nftImgContainer}>
               <div className={styles.nftImgHeader}>ETH</div>
               <img alt={"NFT art"} src={nftImg?.src} className={styles.nftImg} />
+
               <Typography
                 variant='h5'
                 textAlign='left'
@@ -61,23 +55,26 @@ export default function Index() {
               >
                 {meta.title}
               </Typography>
+
               <div className={styles.nftOwner}>
                 {meta.description}
               </div>
+
               <div className={styles.iconContainer}>
-                 {meta?.icons.map(({icon, link}) => (
-                    <Link href={link}>
+                 {meta?.icons.map(({icon, link}, index) => (
+                    <Link key={"link_"+index} href={link}>
                       <img src={icon.src}  className={styles.icons}/>
                     </Link>
                   ))}
                 </div>
             </div>
+
         </div>
         <div>
           <div className={styles.nftImgProperties}>
                 <div className={styles.propertiesContainer}>
                   {meta?.attributes.map(({property, value}, index) => (
-                    <div className={styles.propertyContainer} key={index}>
+                    <div className={styles.propertyContainer} key={"attribute_"+index}>
                       <div>
                         <Typography
                           variant='body2'
@@ -98,14 +95,16 @@ export default function Index() {
                     </div>
                   ))}
                 </div>
+
                 <div className={styles.detailsContainer}>
-                  {meta?.details.map(({property, value}) => (
-                    <div className={styles.detailItem}>
+                  {meta?.details.map(({property, value}, index) => (
+                    <div key={"detail_"+index} className={styles.detailItem}>
                       <div className={styles.detailLabel}>{property}</div>
                       <div className={styles.detailValue}>{value}</div>
                     </div>
                   ))}
                 </div>
+
                 <Button
                   variant='contained'
                   style={{
